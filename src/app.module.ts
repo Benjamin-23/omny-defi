@@ -1,31 +1,38 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { WalletService } from './wallet/wallet.service';
-import { WalletController } from './wallet/wallet.controller';
-import { WalletModule } from './wallet/wallet.module';
-import { TradeService } from './trade/trade.service';
-import { TradeController } from './trade/trade.controller';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 import { TradeModule } from './trade/trade.module';
-import { StakingService } from './staking/staking.service';
-import { StakingController } from './staking/staking.controller';
 import { StakingModule } from './staking/staking.module';
-import { BridgeService } from './bridge/bridge.service';
-import { BridgeController } from './bridge/bridge.controller';
 import { BridgeModule } from './bridge/bridge.module';
-import { PoolService } from './pool/pool.service';
-import { PoolController } from './pool/pool.controller';
 import { PoolModule } from './pool/pool.module';
-import { MintService } from './mint/mint.service';
-import { MintController } from './mint/mint.controller';
 import { MintModule } from './mint/mint.module';
-import { AirdropService } from './airdrop/airdrop.service';
-import { AirdropController } from './airdrop/airdrop.controller';
 import { AirdropModule } from './airdrop/airdrop.module';
+import { WalletModule } from './wallet/wallet.module';
+// import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/auth.service';
+import { AuthController } from './auth/auth.controller';
+import { AuthModule } from './auth/auth.module';
+import { UserService } from './user/user.service';
+import { UserController } from './user/user.controller';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [WalletModule, TradeModule, StakingModule, BridgeModule, PoolModule, MintModule, AirdropModule],
-  controllers: [AppController, WalletController, TradeController, StakingController, BridgeController, PoolController, MintController, AirdropController],
-  providers: [AppService, WalletService, TradeService, StakingService, BridgeService, PoolService, MintService, AirdropService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MongooseModule.forRoot(process.env.MONGODB_URI),
+    WalletModule,
+    TradeModule,
+    StakingModule,
+    BridgeModule,
+    PoolModule,
+    MintModule,
+    AirdropModule,
+    AuthModule,
+    UserModule,
+  ],
+  providers: [AuthService, UserService],
+  controllers: [AuthController, UserController],
 })
 export class AppModule {}

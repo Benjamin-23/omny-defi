@@ -15,5 +15,11 @@ export class Wallet extends Document {
   @Prop()
   lastConnected: Date;
 }
+export type WalletDocument = Wallet & Document;
 
+export enum ChainType {
+  ETHEREUM = 'ethereum',
+  SOLANA = 'solana',
+  TON = 'ton',
+}
 export const WalletSchema = SchemaFactory.createForClass(Wallet);
