@@ -15,6 +15,8 @@ export enum TaskType {
 
 @Schema({ timestamps: true })
 export class Task {
+  @Prop()
+  id: string;
   @Prop({ required: true })
   name: string;
 

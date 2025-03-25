@@ -32,7 +32,7 @@ export class AuthService {
       }
 
       return user;
-    } catch (error) {
+    } catch (error: any) {
       throw new UnauthorizedException('Invalid signature or wallet connection');
     }
   }

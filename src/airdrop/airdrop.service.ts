@@ -48,7 +48,7 @@ export class AirdropService {
     // Create a map of task completions by task ID
     const completionsMap = new Map(
       taskCompletions.map((completion) => [
-        completion.task._id.toString(),
+        completion.task.id.toString(),
         completion,
       ]),
     );
