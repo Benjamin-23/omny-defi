@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TradeModule } from './trade/trade.module';
 import { StakingModule } from './staking/staking.module';
@@ -11,21 +11,15 @@ import { WalletModule } from './wallet/wallet.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 
+// const url =
+//   'mongodb+srv://Basil:qLuV0PDAUex7nHQe@cluster0.8zrhz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
     }),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>(process.env.MONGODB_URI),
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }),
-      inject: [ConfigService],
-    }),
+    MongooseModule.forRoot(process.env.DATABASE_URL),
     WalletModule,
     TradeModule,
     StakingModule,
